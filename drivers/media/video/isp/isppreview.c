@@ -255,7 +255,7 @@ int isppreview_config(struct isp_prev_device *isp_prev, void *userspace_add)
 				goto err_copy_from_user;
 			isppreview_config_chroma_suppression(isp_prev, csup_t);
 		}
-		isppreview_enable_chroma_suppression(isp_prev, 1);
+		isppreview_enable_chroma_suppression(isp_prev, 0);
 		params->features |= PREV_CHROMA_SUPPRESS;
 	} else if (ISP_ABS_PREV_CHROMA_SUPP & config->update) {
 		isppreview_enable_chroma_suppression(isp_prev, 0);
@@ -700,7 +700,7 @@ int isppreview_config_datapath(struct isp_prev_device *isp_prev,
 
 	isp_reg_writel(dev, pcr, OMAP3_ISP_IOMEM_PREV, ISPPRV_PCR);
 
-	if (params->csup.hypf_en == 1)
+	if (params->csup.hypf_en == 0)
 		isppreview_config_chroma_suppression(isp_prev, params->csup);
 	if (params->ytable != NULL)
 		isppreview_config_luma_enhancement(isp_prev, params->ytable);
@@ -1184,8 +1184,8 @@ void isppreview_enable_chroma_suppression(struct isp_prev_device *isp_prev,
 	struct device *dev = to_device(isp_prev);
 
 	if (enable)
-		isp_reg_or(dev, OMAP3_ISP_IOMEM_PREV, ISPPRV_PCR,
-			   ISPPRV_PCR_SUPEN);
+		isp_reg_and(dev, OMAP3_ISP_IOMEM_PREV, ISPPRV_PCR,
+			    ~ISPPRV_PCR_SUPEN);
 	else {
 		isp_reg_and(dev, OMAP3_ISP_IOMEM_PREV, ISPPRV_PCR,
 			    ~ISPPRV_PCR_SUPEN);

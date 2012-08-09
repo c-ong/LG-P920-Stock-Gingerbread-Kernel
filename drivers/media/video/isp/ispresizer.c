@@ -863,7 +863,7 @@ int ispresizer_try_pipeline(struct isp_res_device *isp_res,
 {
 	if (pipe->in.image.pixelformat == V4L2_PIX_FMT_YUYV ||
 	    pipe->in.image.pixelformat == V4L2_PIX_FMT_UYVY) {
-		pipe->in.image.colorspace = V4L2_COLORSPACE_JPEG;
+		pipe->in.image.colorspace = V4L2_COLORSPACE_SRGB;
 	} else {
 		pipe->in.image.colorspace = V4L2_COLORSPACE_SRGB;
 	}
@@ -921,7 +921,7 @@ int ispresizer_s_pipeline(struct isp_res_device *isp_res,
 	ispresizer_set_luma_enhance(dev, NULL);
 
 	if (pipe->in.image.pixelformat == V4L2_PIX_FMT_YUYV)
-		ispresizer_config_ycpos(isp_res, 1);
+		ispresizer_config_ycpos(isp_res, 0);
 	else
 		ispresizer_config_ycpos(isp_res, 0);
 

@@ -1600,8 +1600,8 @@ static int isp_try_pipeline(struct device *dev,
 			pipe->ccdc_in = CCDC_RAW_GBRG;
 		pipe->ccdc_out = CCDC_OTHERS_VP;
 		pipe->prv.in.path = PRV_RAW_CCDC;
-		if ((pix_output->width == 1280) &&
-		    (pix_output->height == 720)) {
+		if ((pix_output->width == 1920) &&
+		    (pix_output->height == 1080)) {
 			pipe->modules = OMAP_ISP_PREVIEW |
 					OMAP_ISP_CCDC;
 			pipe->prv.out.path = PREVIEW_MEM;
@@ -1763,7 +1763,7 @@ static int isp_try_pipeline(struct device *dev,
 	switch (pix_output->pixelformat) {
 	case V4L2_PIX_FMT_YUYV:
 	case V4L2_PIX_FMT_UYVY:
-		pix_output->colorspace = V4L2_COLORSPACE_JPEG;
+		pix_output->colorspace = V4L2_COLORSPACE_SRGB;
 		break;
 	default:
 		pix_output->colorspace = V4L2_COLORSPACE_SRGB;

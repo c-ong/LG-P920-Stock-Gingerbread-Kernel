@@ -325,7 +325,7 @@ int isp_csi_lcm_s_src_fmt(struct isp_csi_device *isp_csi, u32 format)
 		format_val = 0x3;
 		format_decmp = 0;
 		break;
-	case V4L2_PIX_FMT_SGRBG10DPCM8:
+	case V4L2_PIX_FMT_SGRBG10D:
 		format_val = 0x3;
 		format_decmp = 0x2;
 		break;
@@ -366,7 +366,7 @@ int isp_csi_lcm_s_dst_fmt(struct isp_csi_device *isp_csi, u32 format)
 		format_val = 0x3;
 		format_decmp = 0;
 		break;
-	case V4L2_PIX_FMT_SGRBG10DPCM8:
+	case V4L2_PIX_FMT_SGRBG10:
 		format_val = 0x3;
 		format_decmp = 0x2;
 		break;
@@ -507,7 +507,7 @@ int isp_csi_configure_interface(struct isp_csi_device *isp_csi,
 		case V4L2_PIX_FMT_SGRBG10:
 			format = 0x16;		/* RAW10+VP */
 			break;
-		case V4L2_PIX_FMT_SGRBG10DPCM8:
+		case V4L2_PIX_FMT_SGRBG10:
 			format = 0x12;		/* RAW8+DPCM10+VP */
 			break;
 		default:

@@ -1039,8 +1039,8 @@ static int imx046_configure_test_pattern(int mode, struct v4l2_int_device *s,
 		imx046_write_reg(client, IMX046_REG_TEST_PATT_MODE,
 						(mode & 0x7), I2C_16BIT);
 		/* Disable sensor ISP processing */
-		imx046_write_reg(client, IMX046_REG_TESBYPEN,
-					(mode == 0) ? 0x0 : 0x10, I2C_8BIT);
+		//imx046_write_reg(client, IMX046_REG_TESBYPEN,
+					//(mode == 0) ? 0x0 : 0x10, I2C_8BIT);
 	}
 	lvc->current_value = mode;
 	return 0;

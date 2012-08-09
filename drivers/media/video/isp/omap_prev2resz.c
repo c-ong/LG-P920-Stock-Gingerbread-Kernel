@@ -102,7 +102,7 @@ static int prev2resz_ioc_set_config(struct prev2resz_fhdl *fh)
 	int rval, rest;
 
 	if (pipe->in.image.pixelformat != V4L2_PIX_FMT_SBGGR16 &&
-	    pipe->in.image.pixelformat != V4L2_PIX_FMT_SGRBG10DPCM8) {
+	    pipe->in.image.pixelformat != V4L2_PIX_FMT_SGRBG10) {
 		pipe->in.image.bytesperline = (pipe->in.image.width * 2) & ~63;
 		rest = (pipe->in.image.width * 2) % 64;
 	} else {

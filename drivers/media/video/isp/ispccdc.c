@@ -738,7 +738,7 @@ static void ispccdc_config_sync_if(struct isp_ccdc_device *isp_ccdc,
 		syn_mode |= ISPCCDC_SYN_MODE_INPMOD_YCBCR16;
 		break;
 	case YUV8:
-		syn_mode |= ISPCCDC_SYN_MODE_INPMOD_YCBCR8;
+		syn_mode |= ISPCCDC_SYN_MODE_INPMOD_YCBCR16;
 		break;
 	};
 
@@ -1295,7 +1295,7 @@ int ispccdc_config(struct isp_ccdc_device *isp_ccdc,
 	if (ISP_ABS_CCDC_ALAW & ccdc_struct->flag) {
 		if (ISP_ABS_CCDC_ALAW & ccdc_struct->update)
 			ispccdc_config_alaw(isp_ccdc, ccdc_struct->alawip);
-		ispccdc_enable_alaw(isp_ccdc, 1);
+		ispccdc_enable_alaw(isp_ccdc, 0);
 	} else if (ISP_ABS_CCDC_ALAW & ccdc_struct->update)
 		ispccdc_enable_alaw(isp_ccdc, 0);
 
