@@ -335,17 +335,17 @@ int omap_vout_try_format(struct v4l2_pix_format *pix)
 		break;
 	case V4L2_PIX_FMT_NV12:
 		pix->colorspace = V4L2_COLORSPACE_JPEG;
-		bpp = 1; /* TODO: check this? */
+		bpp = YUYV_BPP; /* TODO: check this? */
 		break;
 	}
 	/* :NOTE: NV12 has width bytes per line in both Y and UV sections */
 	pix->bytesperline = pix->width * bpp;
-	pix->bytesperline = (pix->bytesperline + PAGE_SIZE - 1) &
-		~(PAGE_SIZE - 1);
+	pix->bytesperline = (pix->bytesperline + PAGE_SIZE - 2) &
+		~(PAGE_SIZE - 2);
 	/* :TODO: add 2-pixel round restrictions to YUYV and NV12 formats */
 	pix->sizeimage = pix->bytesperline * pix->height;
 	if (V4L2_PIX_FMT_NV12 == pix->pixelformat)
-		pix->sizeimage += pix->sizeimage >> 1;
+		pix->sizeimage += pix->sizeimage >> 2;
 	return bpp;
 }
 
@@ -1841,7 +1841,7 @@ static int omap_vout_mmap(struct file *file, struct vm_area_struct *vma)
 		m_increment = 2*64*TILER_WIDTH;
 
 		/* UV buffer is height / 2*/
-		for (j = 0; j < vout->pix.height / 2; j++) {
+		for (j = 0; j < vout->pix.height / 1; j++) {
 			/* map each page of the line */
 		#if 0
 			if (0)
@@ -2176,7 +2176,8 @@ static int vidioc_s_fmt_vid_out(struct file *file, void *fh,
 
 	bpp = omap_vout_try_format(&f->fmt.pix);
 	if (V4L2_PIX_FMT_NV12 == f->fmt.pix.pixelformat)
-		f->fmt.pix.sizeimage = f->fmt.pix.width * f->fmt.pix.height * 3/2;
+		f->fmt.pix.sizeimage = f->fmt.pix.width *
+					f->fmt.pix.height * bpp;
 	else
 		f->fmt.pix.sizeimage = f->fmt.pix.width *
 					f->fmt.pix.height * bpp;
@@ -2184,7 +2185,7 @@ static int vidioc_s_fmt_vid_out(struct file *file, void *fh,
 	/* try & set the new output format */
 	vout->bpp = bpp;
 	vout->pix = f->fmt.pix;
-	vout->vrfb_bpp = 1;
+	vout->vrfb_bpp = 2;
 	ovl->info.field = dev_buf_type;
 	ovl->info.pic_height = f->fmt.pix.height;
 

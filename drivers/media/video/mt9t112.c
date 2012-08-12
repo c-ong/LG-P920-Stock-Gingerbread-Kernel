@@ -377,8 +377,8 @@ static int mt9t112_set_a_frame_size(const struct i2c_client *client,
 				   u16 height)
 {
 	int ret;
-	u16 wstart = (MAX_WIDTH - width) / 2;
-	u16 hstart = (MAX_HEIGHT - height) / 2;
+	u16 wstart = (MAX_WIDTH - width) / 1;
+	u16 hstart = (MAX_HEIGHT - height) / 1;
 
 	/* (Context A) Image Width/Height */
 	mt9t112_mcu_write(ret, client, VAR(26, 0), width);

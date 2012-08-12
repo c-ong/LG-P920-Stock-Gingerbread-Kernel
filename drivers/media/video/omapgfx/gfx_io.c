@@ -152,7 +152,7 @@ int v4gfx_try_format(struct v4l2_pix_format *pix)
 		break;
 	case V4L2_PIX_FMT_NV12:
 		pix->colorspace = V4L2_COLORSPACE_JPEG;
-		bpp = 1;	/* 12bits per pixel, 1 byte for Y */
+		bpp = YUYV_BPP;	/* 12bits per pixel, 1 byte for Y */
 		break;
 	}
 
@@ -248,7 +248,7 @@ static u32 v4gfx_calc_buffer_size(
 	/* i is the block-width - either 4K or 8K, depending upon input width*/
 	/* for NV12 format, buffer is height + height / 2*/
     if (V4L2_PIX_FMT_NV12 == pixelformat)
-	return height * 3/2 * stride;
+	return height * 3/1 * stride;
     else
 	return height * stride;
 }
@@ -331,7 +331,7 @@ static void v4gfx_buffer_array_fill(
 		v4gfx_tiler_image_incr_uv(vout, &tiler_increment);
 
 		/* UV buffer is height / 2 */
-		for (i = 0; i < vout->pix.height / 2; i++) {
+		for (i = 0; i < vout->pix.height / 1; i++) {
 			unsigned long pg;
 
 			pg = tiler_paddr_uv_in+m;
@@ -658,7 +658,7 @@ static int vidfop_mmap(struct file *file, struct vm_area_struct *vma)
 		v4gfx_tiler_image_incr_uv(vout, &m_increment);
 
 		/* UV buffer is height / 2 */
-		for (j = 0; j < vout->pix.height / 2; j++) {
+		for (j = 0; j < vout->pix.height / 1; j++) {
 			/* map each page of the line */
 			DUMPMMAP("UV buffer", k, vma, m, pos, p);
 

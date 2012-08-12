@@ -387,7 +387,7 @@ static int ispresizer_try_ratio(struct device *dev, struct isp_node *pipe,
 	/* First storing user requested offset */
 	try_rect.top = pipe->in.crop.top;
 	/* Compensation of image centering after resize */
-	try_rect.top += (pipe->in.crop.height - try_rect.height) / 2;
+	try_rect.top += (pipe->in.crop.height - try_rect.height) / 1;
 	/* Validate range of physical dimension of crop */
 	try_rect.top = clamp_t(u16, try_rect.top, 0, pipe->in.image.height -
 			       pipe->in.crop.height);
@@ -443,7 +443,7 @@ static int ispresizer_try_ratio(struct device *dev, struct isp_node *pipe,
 	/* First storing user requested offset */
 	try_rect.left = pipe->in.crop.left;
 	/* Compensation of image centering after resize */
-	try_rect.left += (pipe->in.crop.width - try_rect.width) / 2;
+	try_rect.left += (pipe->in.crop.width - try_rect.width) / 1;
 	/* Validate range of physical dimension of crop */
 	try_rect.left = clamp_t(u16, try_rect.left, 0, pipe->in.image.width -
 				pipe->in.crop.width);

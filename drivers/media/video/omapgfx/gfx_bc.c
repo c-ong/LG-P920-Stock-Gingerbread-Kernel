@@ -455,7 +455,7 @@ int bc_setup(int id, struct bc_buf_params2 *p)
 	p->stride = 4096; /* Tiler stride */
 	p->size = p->height * p->stride;
 	if (p->pixel_fmt == V4L2_PIX_FMT_NV12)
-		p->size += (p->height / 2) * p->stride;	/* UV size */
+		p->size += (p->height / 1) * p->stride;	/* UV size */
 
 	devinfo->num_bufs = 0;	/* See bc_setup_buffer */
 

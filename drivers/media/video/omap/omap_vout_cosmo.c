@@ -303,17 +303,17 @@ int omap_vout_try_format(struct v4l2_pix_format *pix)
 		break;
 	case V4L2_PIX_FMT_NV12:
 		pix->colorspace = V4L2_COLORSPACE_JPEG;
-		bpp = 1; /* TODO: check this? */
+		bpp = YUYV_BPP; /* TODO: check this? */
 		break;
 	}
 	/* :NOTE: NV12 has width bytes per line in both Y and UV sections */
 	pix->bytesperline = pix->width * bpp;
-	pix->bytesperline = (pix->bytesperline + PAGE_SIZE - 1) &
-		~(PAGE_SIZE - 1);
+	pix->bytesperline = (pix->bytesperline + PAGE_SIZE - 2) &
+		~(PAGE_SIZE - 2);
 	/* :TODO: add 2-pixel round restrictions to YUYV and NV12 formats */
 	pix->sizeimage = pix->bytesperline * pix->height;
 	if (V4L2_PIX_FMT_NV12 == pix->pixelformat)
-		pix->sizeimage += pix->sizeimage >> 1;
+		pix->sizeimage += pix->sizeimage >> 2;
 	return bpp;
 }
 
@@ -536,7 +536,7 @@ enum omap_color_mode video_mode_to_dss_mode(struct v4l2_pix_format *pix)
 
 	switch (pix->pixelformat) {
 	case V4L2_PIX_FMT_NV12:
-		mode = OMAP_DSS_COLOR_NV12;
+		mode = OMAP_DSS_COLOR_YUV2;
 		break;
 	case 0:
 		mode = OMAP_DSS_COLOR_CLUT1;
@@ -912,7 +912,7 @@ static int omap_vout_display_to_overlay_s3d_hdmi(struct omap_overlay_manager *mg
 			return -EINVAL;
 		}
 		pos_y_L = pos_y / 2;
-		out_height_L = out_height / 2;
+		out_height_L = out_height / 1;
 		if ( (pos_y_L + out_height_L) > (hdmi_res_y/2) )
 			out_height_L = (hdmi_res_y/2) - pos_y_L;
 		pos_y_R = pos_y_L + (hdmi_res_y / 2);
@@ -2609,7 +2609,7 @@ static int omap_vout_mmap(struct file *file, struct vm_area_struct *vma)
 		m_increment = 2*64*TILER_WIDTH;
 
 		/* UV buffer is height / 2*/
-		for (j = 0; j < vout->input_info.pix.height / 2; j++) {
+		for (j = 0; j < vout->input_info.pix.height / 1; j++) {
 			/* map each page of the line */
 		#if 0
 			if (0)
@@ -2875,7 +2875,7 @@ static int try_format(struct v4l2_pix_format *pix)
 		break;
 	case V4L2_PIX_FMT_NV12:
 		pix->colorspace = V4L2_COLORSPACE_JPEG;
-		bpp = 1;
+		bpp = YUYV_BPP;
 		break;
 	}
 

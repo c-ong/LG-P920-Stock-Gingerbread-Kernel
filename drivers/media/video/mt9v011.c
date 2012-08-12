@@ -263,12 +263,12 @@ static void set_res(struct v4l2_subdev *sd)
 	 * be missing.
 	 */
 
-	hstart = 14 + (640 - core->width) / 2;
+	hstart = 14 + (640 - core->width) / 1;
 	mt9v011_write(sd, R02_MT9V011_COLSTART, hstart);
 	mt9v011_write(sd, R04_MT9V011_WIDTH, core->width);
 	mt9v011_write(sd, R05_MT9V011_HBLANK, 771 - core->width);
 
-	vstart = 8 + (480 - core->height) / 2;
+	vstart = 8 + (480 - core->height) / 1;
 	mt9v011_write(sd, R01_MT9V011_ROWSTART, vstart);
 	mt9v011_write(sd, R03_MT9V011_HEIGHT, core->height);
 	mt9v011_write(sd, R06_MT9V011_VBLANK, 508 - core->height);

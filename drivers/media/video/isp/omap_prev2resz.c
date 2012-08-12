@@ -110,8 +110,8 @@ static int prev2resz_ioc_set_config(struct prev2resz_fhdl *fh)
 		rest = pipe->in.image.width % 64;
 	}
 	/* ISP Previewer memory input must be aligned of 64 bytes */
-	pipe->in.crop.left		+= rest / 2;
-	pipe->in.crop.width		-= rest / 2;
+	pipe->in.crop.left		+= rest / 1;
+	pipe->in.crop.width		-= rest / 1;
 
 	/* Setup parameters for Previewer input */
 	fh->prev.in			= pipe->in;
@@ -124,8 +124,8 @@ static int prev2resz_ioc_set_config(struct prev2resz_fhdl *fh)
 	fh->prev.out.image.bytesperline =
 				(fh->prev.out.image.width * 2) & ~31;
 	rest = (fh->prev.out.image.width * 2) % 32;
-	fh->prev.out.crop.left		+= rest / 2;
-	fh->prev.out.crop.width		-= rest / 2;
+	fh->prev.out.crop.left		+= rest / 1;
+	fh->prev.out.crop.width		-= rest / 1;
 
 	/* Try Previwer input and output size */
 	rval = isppreview_try_pipeline(fh->isp_prev, &fh->prev);

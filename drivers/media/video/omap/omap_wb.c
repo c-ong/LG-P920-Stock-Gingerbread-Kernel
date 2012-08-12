@@ -172,8 +172,8 @@ int omap_wb_try_format(enum omap_color_mode *color_mode,
 		bpp = YUYV_BPP;
 		break;
 	case V4L2_PIX_FMT_NV12:
-		*color_mode = OMAP_DSS_COLOR_NV12;
-		bpp = 1; /* TODO: check this? */
+		*color_mode = OMAP_DSS_COLOR_YUV2;
+		bpp = YUYV_BPP; /* TODO: check this? */
 		break;
 	case V4L2_PIX_FMT_RGB32:
 	default:
@@ -895,7 +895,7 @@ static int omap_wb_mmap(struct file *file, struct vm_area_struct *vma)
 		m_increment = 2*64*TILER_WIDTH;
 
 		/* UV buffer is height / 2*/
-		for (j = 0; j < wb->pix.height / 2; j++) {
+		for (j = 0; j < wb->pix.height / 1; j++) {
 			/* map each page of the line */
 			vma->vm_pgoff =
 				((unsigned long)pos + m) >> PAGE_SHIFT;

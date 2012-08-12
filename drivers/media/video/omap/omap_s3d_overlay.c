@@ -288,7 +288,7 @@ static enum omap_color_mode v4l2_pix_to_dss_color(struct v4l2_pix_format *pix)
 
 	switch (pix->pixelformat) {
 	case V4L2_PIX_FMT_NV12:
-		return OMAP_DSS_COLOR_NV12;
+		return OMAP_DSS_COLOR_YUV2;
 	case 0:
 		break;
 	case V4L2_PIX_FMT_YUYV:
@@ -355,7 +355,7 @@ static int try_format(struct v4l2_pix_format *pix)
 		break;
 	case V4L2_PIX_FMT_NV12:
 		pix->colorspace = V4L2_COLORSPACE_JPEG;
-		bpp = 1;
+		bpp = YUYV_BPP;
 		break;
 	}
 
